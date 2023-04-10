@@ -26,7 +26,7 @@ Habitus supports a color mode, persitstant saving of habits (and bringing them b
 ## Appendix
 
 HABIT is a programming project developed as part of the course "web technologies" with Prof. Dr. [@Arif Wider](https://github.com/ProfWider) and [@Daniel Wagner](https://github.com/DanielWagner87).
-The course "web technologies" is part of HTW Berlins' Ba Sc. Business Computing.    
+The course "web technologies" is part of HTW Berlins' B.Sc. Business Computing.    
 
 ## Creator
 
