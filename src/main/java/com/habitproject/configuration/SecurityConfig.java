@@ -14,41 +14,14 @@ import java.net.URI;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    ClientRegistrationRepository clientRegistrationRepository;
 
-    OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
-        OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        successHandler.setPostLogoutRedirectUri(URI.create("https://habit-project.herokuapp.com/"));
-        return successHandler;
+
+    public static class Site{
+        public static final String INDEX = "/home";
+        public static final String SLASH = "/";
+        public static final String LOGIN = "/login";
+        public static final String DASH = "/dashboard";
+        public static final String ERROR= "/error";
+
     }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-
-                // public pages
-                .antMatchers(
-                        Endpoints.Site.INDEX,
-                        Endpoints.Site.SLASH,
-                        Endpoints.Site.LOGIN
-                ).permitAll()
-                // static resources
-                .antMatchers(
-                        "/css/**",
-                        "/img/**",
-                        "/js/**",
-                        "./templates"
-                ).permitAll()
-                .anyRequest().authenticated()
-
-                // send the user back to the root page when they logout
-                .and().logout().logoutSuccessHandler(oidcLogoutSuccessHandler())
-
-                .and().oauth2Client()
-                .and().oauth2Login();
-    }
-
 }

@@ -10,9 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class UserRESTController {
 
-    @GetMapping("/user")
-    ResponseEntity <Object> getUserId (@AuthenticationPrincipal OidcUser user) {
-        System.out.println(user.getAttributes().get("sub"));
-        return ResponseEntity.status(HttpStatus.OK).body(user.getAttributes().get("sub"));
-    }
 }
