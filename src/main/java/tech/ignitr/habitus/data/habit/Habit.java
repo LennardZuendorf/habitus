@@ -1,6 +1,8 @@
-package tech.ignitr.habitus.data;
+package tech.ignitr.habitus.data.habit;
 
 import jakarta.persistence.*;
+import tech.ignitr.habitus.data.user.User;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +20,10 @@ public class Habit {
 
     @Column(nullable = false, name="max_quantity")
     private Integer maxQuantity;
+
+    @Column(nullable = false)
+    @Enumerated(value=EnumType.STRING)
+    private Frequency frequency;
 
     @Column(nullable = false, name="current_quantity")
     private Integer currentQuantity;
@@ -37,9 +43,7 @@ public class Habit {
         this.currentQuantity=0;
     }
 
-    public Habit() {
-
-    }
+    protected Habit(){};
 
     public Long getId() {
         return id;

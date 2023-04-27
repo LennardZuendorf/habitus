@@ -1,6 +1,7 @@
-package tech.ignitr.habitus.data;
+package tech.ignitr.habitus.data.user;
 
 import jakarta.persistence.*;
+import tech.ignitr.habitus.data.habit.Habit;
 
 import java.util.List;
 
