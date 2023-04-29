@@ -1,5 +1,6 @@
 package tech.ignitr.habitus.web.habit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ignitr.habitus.data.habit.Habit;
@@ -11,6 +12,8 @@ import java.util.List;
 public class HabitController {
 
     private final HabitService service;
+
+    @Autowired
     public HabitController( HabitService service) {
         this.service = service;
     }
