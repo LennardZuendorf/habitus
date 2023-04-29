@@ -1,21 +1,21 @@
 supabase:
   url: ${SUPABASE_URL}
   anon: ${SUPABASE_ANON_KEY}
-  jwt_secret: ${SUPABASE_JWT_SIGNER}
+  jwt_secret: ${SUPABASE_JWT_SECRET}
 spring:
   application:
     name: Habitus
   datasource:
-    url: ${SUPABASE_DATABASE_URL}
-    username: ${SUPABASE_DATABASE_USER}
-    password: ${SUPABASE_DATABASE_PASSWORD}
+    url: ${SUPABASE_DB_URL}
+    username: ${SUPABASE_DB_USER}
+    password: ${SUPABASE_DB_PW}
     driverClassName: org.postgresql.Driver
   jpa:
     open-in-view: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        ddl-auto: validate
+        ddl-auto: create
         jdbc:
           lob:
             non_contextual_creation: true
