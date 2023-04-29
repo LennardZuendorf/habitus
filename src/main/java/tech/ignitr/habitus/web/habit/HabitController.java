@@ -40,7 +40,7 @@ public class HabitController {
 
     /**
      * API call for updating habit (HabitEntity)
-     * @param userId - id of the HabitEntry to add
+     * @param id - id of the HabitEntry to add
      * @param requestBody - all of HabitEntity params
      * @return status code
      */
@@ -51,7 +51,7 @@ public class HabitController {
 
     /**
      * API call for deleting a habit (HabitEntity)
-     * @param userId - id of the habit that should be deleted
+     * @param id - id of the habit that should be deleted
      * @return status code
      */
     @DeleteMapping("/habits/{id}")

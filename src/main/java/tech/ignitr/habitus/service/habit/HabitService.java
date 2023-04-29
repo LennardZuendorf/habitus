@@ -1,16 +1,11 @@
 package tech.ignitr.habitus.service.habit;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import tech.ignitr.habitus.data.habit.Habit;
 import tech.ignitr.habitus.web.habit.HabitListStatusReturn;
 import tech.ignitr.habitus.web.habit.HabitRequestModel;
 import tech.ignitr.habitus.web.habit.HabitStatusReturn;
 
-import java.util.List;
 
-@Service
 public interface HabitService {
 
     HabitStatusReturn postHabit(HabitRequestModel requestBody);
