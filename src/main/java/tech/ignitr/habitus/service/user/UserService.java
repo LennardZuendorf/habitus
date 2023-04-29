@@ -1,16 +1,13 @@
 package tech.ignitr.habitus.service.user;
 
-import org.springframework.http.HttpStatus;
-import tech.ignitr.habitus.web.habit.HabitListStatusReturn;
-import tech.ignitr.habitus.web.habit.HabitRequestModel;
-import tech.ignitr.habitus.web.habit.HabitStatusReturn;
+import org.springframework.http.ResponseEntity;
+import tech.ignitr.habitus.data.user.User;
+import tech.ignitr.habitus.web.user.UserRequestModel;
 
 public interface UserService {
 
-    //Habit services
-    HabitStatusReturn postHabit(HabitRequestModel requestBody);
-    HabitListStatusReturn getHabits(String uid);
-    HttpStatus putHabit(Long hid, HabitRequestModel requestBody);
-    HttpStatus deleteHabit(Long hid);
-    HttpStatus deleteAllHabits(String uid);
+    ResponseEntity<Void> createUser(UserRequestModel requestModel);
+    ResponseEntity<User> getUser(Long id);
+    ResponseEntity<User> updateUser(Long id);
+    ResponseEntity<Void> deleteUser(Long id);
 }

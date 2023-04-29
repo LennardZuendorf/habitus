@@ -14,8 +14,8 @@ public class UserController {
     }
 
     @PostMapping(path="/user")
-    public ResponseEntity<Void> postUser(){
-        return service.createUser();
+    public ResponseEntity<Void> postUser(UserRequestModel requestModel){
+        return service.createUser(requestModel);
     }
 
     @GetMapping(path = "/user/{id}")
