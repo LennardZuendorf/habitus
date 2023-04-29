@@ -6,6 +6,7 @@ import tech.ignitr.habitus.data.user.User;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name="habits")
 public class Habit {
 
     @Id
@@ -44,6 +45,14 @@ public class Habit {
     }
 
     protected Habit(){};
+
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
+    }
 
     public Long getId() {
         return id;

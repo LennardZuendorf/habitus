@@ -6,6 +6,7 @@ import tech.ignitr.habitus.data.habit.Habit;
 import java.util.List;
 
 @Entity
+@Table(name="users")
 public class User {
 
     @Id
@@ -21,8 +22,7 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    public User(Long id, String name, String email) {
-        this.id = id;
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
     }
