@@ -3,31 +3,22 @@
 # Habitus
 
 Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.
-Originally based on Java Spring and Thymeleaf with Vue.js via cdn.
+Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.
 
-Habitus supports a color mode, persitstant saving of habits (and bringing them back, when they are due), editing and deleting your habits.
+Habitus supports a color mode, persistant saving of habits (and bringing them back, when they are due), editing and deleting your habits.
 
 ## Tech Stack
 
-**Client:** Vue.js, JavaScript
+**Client:** HTML, CSS, HTMX
 
-**Server:** Spring Boot, Thymeleaf
+**Server:** Java, Spring Boot
 
-**Database:** PostgreSQL (Heroku)
+**Hosting, Database, Auth:** DigitalOcean, Supabase
 
-**Cloud Development:** Heroku
+## Status
 
+[![Gradle Build](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml/badge.svg)](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml)
 
 ## Author
-
-- [@LennardZuendorf](https://github.com/LennardZuendorf)
-
-
-## Appendix
-
-HABIT is a programming project developed as part of the course "web technologies" with Prof. Dr. [@Arif Wider](https://github.com/ProfWider) and [@Daniel Wagner](https://github.com/DanielWagner87).
-The course "web technologies" is part of HTW Berlins' B.Sc. Business Computing.    
-
-## Creator
 
 - [@LennardZuendorf](https://github.com/LennardZuendorf)
