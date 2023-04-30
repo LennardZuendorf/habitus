@@ -3,15 +3,17 @@ package tech.ignitr.habitus.data.habit;
 import jakarta.persistence.*;
 import tech.ignitr.habitus.data.user.User;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name="habits")
 public class Habit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false)
+    private UUID id;
 
     @ManyToOne
     private User user;
@@ -29,14 +31,14 @@ public class Habit {
     @Column(nullable = false, name="current_quantity")
     private Integer currentQuantity;
 
-    @Column(nullable = true)
-    private LocalDateTime check;
+    @Column(name="date_done")
+    @Temporal(TemporalType.DATE)
+    private LocalDate date_done;
 
     @Column(nullable = false)
     private boolean done;
 
-    public Habit(Long id, User user, String tag, Integer maxQuantity) {
-        this.id = id;
+    public Habit( User user, String tag, Integer maxQuantity) {
         this.user = user;
         this.tag = tag;
         this.maxQuantity = maxQuantity;
@@ -54,7 +56,7 @@ public class Habit {
         this.frequency = frequency;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -86,19 +88,19 @@ public class Habit {
         this.currentQuantity = currentQuantity;
     }
 
-    public LocalDateTime getCheck() {
-        return check;
-    }
-
-    public void setCheck(LocalDateTime check) {
-        this.check = check;
-    }
-
     public boolean isDone() {
         return done;
     }
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public LocalDate getDate_done() {
+        return date_done;
+    }
+
+    public void setDate_done(LocalDate date_done) {
+        this.date_done = date_done;
     }
 }

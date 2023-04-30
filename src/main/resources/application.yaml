@@ -12,10 +12,11 @@ spring:
     driverClassName: org.postgresql.Driver
   jpa:
     open-in-view: true
+    hibernate:
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        ddl-auto: create
         jdbc:
-          lob:
-            non_contextual_creation: true
+          time_zone: UTC
+    show-sql: true
