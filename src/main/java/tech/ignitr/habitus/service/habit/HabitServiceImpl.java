@@ -1,6 +1,6 @@
 package tech.ignitr.habitus.service.habit;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import tech.ignitr.habitus.data.habit.Habit;
@@ -16,16 +16,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class HabitServiceImpl implements HabitService{
 
     private final HabitRepository habitRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public HabitServiceImpl(HabitRepository habitRepository, UserRepository userRepository) {
-        this.habitRepository = habitRepository;
-        this.userRepository = userRepository;
-    }
 
     //services for habit API endpoints
     /**
@@ -34,9 +29,9 @@ public class HabitServiceImpl implements HabitService{
      * @return HabitStatusReturn - combination of new Entity and status code
      */
     @Override
-    public HabitStatusReturn postHabit(HabitRequestModel requestBody) {
+    public HabitStatusReturn postHabit(HabitRequestModel requestBody) throws Exception {
         Habit newHabit = Habit.builder()
-                .user(userRepository.getUserById(requestBody.getUserId()))
+                .user(new User())
                 .tag(requestBody.getTag())
                 .frequency(requestBody.getFrequency())
                 .currentQuantity(0)
@@ -94,7 +89,7 @@ public class HabitServiceImpl implements HabitService{
      */
     @Override
     public HttpStatus deleteAllHabits(UUID userId) {
-        User user = userRepository.getUserById(userId);
+        User user = userRepository (userId);
         if (!user.getHabits().isEmpty()){
             habitRepository.deleteAllByUser(user);
             return HttpStatus.OK;

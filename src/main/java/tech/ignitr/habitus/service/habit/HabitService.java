@@ -10,9 +10,10 @@ import java.util.UUID;
 
 public interface HabitService {
 
-    HabitStatusReturn postHabit(HabitRequestModel requestBody);
-    HabitListStatusReturn getHabits(UUID userId);
-    HttpStatus putHabit(UUID id, HabitRequestModel requestBody);
-    HttpStatus deleteHabit(UUID id);
-    HttpStatus deleteAllHabits(UUID userId);
+        HabitStatusReturn postHabit(HabitRequestModel requestBody) throws Exception;
+        HabitListStatusReturn getHabits(UUID userId);
+        HttpStatus putHabit(UUID id, HabitRequestModel requestBody);
+        HttpStatus deleteHabit(UUID id);
+        HttpStatus deleteAllHabits(UUID userId);
+
 }
