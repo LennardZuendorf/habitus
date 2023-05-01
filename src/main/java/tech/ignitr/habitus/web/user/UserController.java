@@ -1,6 +1,6 @@
 package tech.ignitr.habitus.web.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ignitr.habitus.data.user.User;
@@ -10,18 +10,19 @@ import java.util.UUID;
 
 @RequestMapping("/user")
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService service;
 
-    @Autowired
-    public UserController( UserService service) {
-        this.service = service;
+    @PostMapping(path="/register")
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request){
+        return service.registerUser(request);
     }
 
-    @PostMapping(path="/")
-    public ResponseEntity<Void> postUser(UserRequestModel requestModel){
-        return service.postUser(requestModel);
+    @GetMapping(path="/login")
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequest request){
+        return service.loginUser(request);
     }
 
     @GetMapping(path = "/")
@@ -38,4 +39,5 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@RequestParam("id") UUID id){
         return service.deleteUser(id);
     }
+
 }
