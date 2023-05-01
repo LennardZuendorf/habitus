@@ -1,0 +1,32 @@
+<!-- navbar fragment -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: var(--background-color)" th:fragment="navbar" id="navbar">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-2 mt-lg-0" th:href="@{/home.html}">
+        <img src="/img/logo_long.svg"
+             height="60px"
+             alt=""
+             loading="lazy"
+        />
+      </a>
+
+      <!-- right side -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- color mode button -->
+        <button type="button" class="btn btn-rounded navbar_button" id="colorButton" style="color: var(--habit-color)" onclick="toggleColor()">
+          <i class="fas fa-sun fa-lg" aria-hidden="true" id="colorModeIcon"> </i> COLOR</button>
+
+        <!-- close button -->
+        <button type="button" class="btn btn-rounded navbar_button" id="closeButton" style="color: var(--text-color)" onclick="location.href='/home'">
+          <i class="fa fa-times fa-lg" aria-hidden="true" id="closeButtonIcon"> </i> LOGOUT</button>
+
+      </ul>
+      <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
