@@ -1,7 +1,0 @@
-language: java
-jdk:
-  – oraclejdk15
-
-before_install:
-  – chmod +x gradlew
-

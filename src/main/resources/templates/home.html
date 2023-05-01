@@ -1,95 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>habitus</title>
 
-    <head>
+    <!--external javascript imports-->
+    <script type="importmap">{"imports": {"vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"}}</script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mdb-vue-ui-kit/js/mdb.umd.min.js"></script>
 
-        <!--basics-->
-        <title>HABIT</title>
-        <meta http-equiv="Content-Type" content="text/html"/>
-        <meta charset="UTF-8">
-        <link rel="icon" type="image/svg" th:href="@{/img/logo_clean.svg}"/>
-        <!--basics-->
+    <!--external css imports-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdb-vue-ui-kit/css/mdb.min.css"/>
 
-        <!--external Style Imports-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdb-ui-kit@3.8.0/css/mdb.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-        <link rel="stylesheet" th:href="@{https://global.oktacdn.com/okta-signin-widget/5.7.3/css/okta-sign-in.min.css}"/>
-        <!--external Style Imports-->
+    <!--internal css imports-->
+    <link rel="stylesheet"  th:href="/css/Style.css"></link>
 
-        <!--internal Style Imports -->
-        <link rel="stylesheet" th:href="@{/css/oktaStyle.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
-        <!--internal Style Imports -->
+</head>
+<body>
+<div class="container">
+    <!--navbar-->
+    <div th:insert="fragments/navbar :: navbar" style="margin-top: 15px"></div>
 
-        <!--external JS Imports-->
-        <script src="https://cdn.jsdelivr.net/npm/@okta/okta-signin-widget@5.7.3/dist/js/okta-sign-in.entry.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@3.1.2/dist/vue.global.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/mdb-ui-kit@3.8.0/js/mdb.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@babel/core@7.14.6/lib/index.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js"></script>
-        <!--external JS Imports-->
+    <!--footer-->
+    <div th:insert="fragments/footer :: footer" style="margin-top: 15px"></div>
 
-    </head>
-
-    <body class="dark-mode bg-bg" onload="startupColor();">
-
-    <!-- navbar -->
-    <div th:insert="fragments/fragments :: navbar"></div>
-    <!-- navbar -->
-
-    <!-- logo & text -->
-    <div class="container-fluid" style="height: 100%">
-
-        <!-- logo row-->
-        <div class="row align-items-center justify-content-center bg-bg" style="padding-top: 5%">
-            <div class="d-flex justify-content-center">
-                <img src="/img/logo.svg"
-                     height="300px"
-                     alt=""
-                     loading="lazy"
-                />
-            </div>
-        </div>
-        <!-- logo row-->
-
-        <!-- login register row-->
-        <div class="row align-items-center justify-content-center" style="padding-top: 5%">
-            <div class="d-flex justify-content-center">
-
-                <!-- login button -->
-                <button type="button" class="btn btn-rounded login-button" onclick="location.href='/dashboard';">
-                    LOGIN | REGISTER
-                </button>
-                <!-- login button -->
-
-            </div>
-        </div>
-        <!-- login register row-->
-    </div>
-    <!-- logo & text -->
-
-    <!-- footer-->
-    <div th:insert="fragments/fragments :: footer" style="margin-top: 15px"></div>
-    <!-- footer-->
-
+    <!--cookie banner-->
+    <div th:insert="fragments/cookie-banner :: cookie-banner"></div>
+</div>
 </body>
 
-    <!--internal java scripts-->
-    <script th:src="@{/js/colorMode.js}" type="text/javascript" defer></script>
-    <script th:src="@{/js/oktaWidget.js}" type="text/javascript" defer></script>
-    <script th:src="@{/js/habitApp.js}" type="module"></script>
-    <script th:src="@{/js/settingsApp.js}" type="module"></script>
-    <!--internal java scripts-->
-
-    <!--color mode script-->
-    <script type="text/javascript">
-        function startupColor() {
-            if (localStorage.getItem("colorMode") === "light") {
-                toggleColor();
-            }
-        }
-    </script>
-    <!--color mode script-->
+<!--internal javascript imports-->
+<script type="module" th:src="@{/js/HabitApp.js}"></script>
+<script type="module" th:src="@{/js/settingsApp.js}"></script>
+<script type="text/javascript" th:src="@{/js/CookieScript.js}" defer></script>
 
 </html>
