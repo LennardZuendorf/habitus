@@ -12,7 +12,7 @@ public class SiteController {
         return "index";
     }
 
-    @GetMapping(path = "/dashboard")
+    @GetMapping(path = "/home")
     public String showDashboard() {
         return "home";
     }
@@ -24,6 +24,6 @@ public class SiteController {
 
     @GetMapping(path = "login")
     public String showLogin() {
-        return "home";
+        return "index";
     }
 }
