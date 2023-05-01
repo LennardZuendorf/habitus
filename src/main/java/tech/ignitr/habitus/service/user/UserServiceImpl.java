@@ -22,7 +22,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ResponseEntity<Void> postUser(UserRequestModel requestModel) {
-        repository.saveAndFlush(new User(requestModel.getName(), requestModel.getEmail()));
+        repository.saveAndFlush(User.builder()
+                .username(requestModel.getName())
+                .email(requestModel.getEmail())
+                .build());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

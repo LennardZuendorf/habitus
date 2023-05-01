@@ -1,63 +1,34 @@
 package tech.ignitr.habitus.data.user;
 
 import jakarta.persistence.*;
+import lombok.*;
 import tech.ignitr.habitus.data.habit.Habit;
 
 import java.util.List;
 import java.util.UUID;
 
+
+@Data
+@Builder
 @Entity
 @Table(name="users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false)
+    @Column(name = "id", updatable = false, nullable = false)
+    @Setter(AccessLevel.PROTECTED)
     private UUID id;
 
     @OneToMany(mappedBy = "user")
     private List<Habit> habits;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
 
     @Column(nullable = false)
     private String email;
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-
-    public User() {
-
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public List<Habit> getHabits() {
-        return habits;
-    }
-
-    public void setHabits(List<Habit> habits) {
-        this.habits = habits;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

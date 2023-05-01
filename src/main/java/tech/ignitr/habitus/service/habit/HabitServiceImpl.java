@@ -35,10 +35,14 @@ public class HabitServiceImpl implements HabitService{
      */
     @Override
     public HabitStatusReturn postHabit(HabitRequestModel requestBody) {
-        Habit newHabit = new Habit(
-                userRepository.getUserById(requestBody.getId()),
-                requestBody.getTag(),
-                requestBody.getMaxQuantity());
+        Habit newHabit = Habit.builder()
+                .user(userRepository.getUserById(requestBody.getUserId()))
+                .tag(requestBody.getTag())
+                .frequency(requestBody.getFrequency())
+                .currentQuantity(0)
+                .maxQuantity(requestBody.getMaxQuantity())
+                .done(false)
+                .build();
         habitRepository.saveAndFlush(newHabit);
         return new HabitStatusReturn(newHabit, HttpStatus.CREATED);
     }
@@ -58,7 +62,7 @@ public class HabitServiceImpl implements HabitService{
 
     /**
      * updating a HabitEntity in the database
-     * @param hid - id of the habit to update
+     * @param id - id of the habit to update
      * @param requestBody - all of HabitEntity params
      * @return http status code
      */
