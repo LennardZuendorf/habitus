@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public interface HabitRepository extends JpaRepository <Habit, UUID>{
     List<Habit> findAllByUser(User user);
-    boolean existsByUser(User user);
     Habit getHabitById(UUID id);
     void deleteAllByUser(User user);
 }

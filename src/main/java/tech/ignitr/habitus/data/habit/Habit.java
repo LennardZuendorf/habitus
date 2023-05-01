@@ -3,7 +3,6 @@ package tech.ignitr.habitus.data.habit;
 import jakarta.persistence.*;
 import lombok.*;
 import tech.ignitr.habitus.data.user.User;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
