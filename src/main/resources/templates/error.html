@@ -15,26 +15,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdb-vue-ui-kit/css/mdb.min.css"/>
 
-    <!--internal css imports-->
-    <link rel="stylesheet"  th:href="/css/Style.css"></link>
+    <!--internal css import-->
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 
 </head>
 <body>
 <div class="container">
     <!--navbar-->
-    <div th:insert="fragments/navbar :: navbar" style="margin-top: 15px"></div>
+    <div th:insert="~{fragments/navbar :: navbar}" style="margin-top: 15px"></div>
 
     <!--footer-->
-    <div th:insert="fragments/footer :: footer" style="margin-top: 15px"></div>
+    <div th:insert="~{fragments/footer :: footer}" style="margin-top: 15px"></div>
 
     <!--cookie banner-->
-    <div th:insert="fragments/cookie-banner :: cookie-banner"></div>
+    <div th:insert="~{fragments/cookie-banner :: cookie-banner}"></div>
 </div>
 </body>
 
 <!--internal javascript imports-->
-<script type="module" th:src="@{/js/HabitApp.js}"></script>
-<script type="module" th:src="@{/js/settingsApp.js}"></script>
-<script type="text/javascript" th:src="@{/js/CookieScript.js}" defer></script>
+<script type="text/javascript" th:src="@{/js/cookieScript.js}"></script>
 
 </html>
