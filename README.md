@@ -9,11 +9,9 @@ Habitus supports a color mode, persistant saving of habits (and bringing them ba
 
 ## Tech Stack
 
-**Client:** HTML, CSS, HTMX
-
 **Server:** Java, Spring Boot
 
-**Hosting, Database, Auth:** DigitalOcean, Supabase
+**Hosting, Database:** DigitalOcean (Docker Containers), PostgreSQL
 
 ## Status
 
@@ -22,3 +20,7 @@ Habitus supports a color mode, persistant saving of habits (and bringing them ba
 ## Author
 
 - [@LennardZuendorf](https://github.com/LennardZuendorf)
+
+## Credits
+
+- This project is using some resources from AmigosCode's tutorial on [SpringBoot3 + Spring Security 6](https://www.youtube.com/watch?v=KxqlJblhzfI&t=2124s&ab_channel=Amigoscode)
