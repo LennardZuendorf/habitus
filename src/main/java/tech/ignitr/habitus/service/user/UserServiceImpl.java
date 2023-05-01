@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<User> getUser(UUID id) {
         if (repository.existsById(id)){
-            return ResponseEntity.status(HttpStatus.OK).body(repository.
+            return ResponseEntity.status(HttpStatus.OK).body(repository.findById(id).orElseThrow(()-> new RuntimeException("User not found")));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
