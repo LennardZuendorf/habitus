@@ -1,3 +1,5 @@
+server:
+  port : 8081
 supabase:
   url: ${SUPABASE_URL}
   anon: ${SUPABASE_ANON_KEY}
