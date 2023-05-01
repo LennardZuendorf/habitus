@@ -1,9 +1,16 @@
 package tech.ignitr.habitus.web.user;
 
+import java.util.UUID;
+
 public class UserRequestModel {
 
+    private UUID id;
     private String name;
     private String email;
+
+    public UUID getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

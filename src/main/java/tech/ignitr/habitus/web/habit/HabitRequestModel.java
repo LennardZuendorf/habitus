@@ -3,11 +3,12 @@ package tech.ignitr.habitus.web.habit;
 import tech.ignitr.habitus.data.habit.Frequency;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class HabitRequestModel {
 
-    private Long id;
-    private Long userId;
+    private UUID id;
+    private UUID userId;
     private String tag;
     private Integer maxQuantity;
     private Frequency frequency;
@@ -15,11 +16,11 @@ public class HabitRequestModel {
     private LocalDateTime check;
     private boolean done;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public Long getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 

@@ -7,6 +7,7 @@ import tech.ignitr.habitus.data.habit.Habit;
 import tech.ignitr.habitus.service.habit.HabitService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/habits")
@@ -37,7 +38,7 @@ public class HabitController {
      * @return status code, json
      */
     @GetMapping("/")
-    public ResponseEntity <List<Habit>> getAllHabit(@RequestParam("userId") Long userId){
+    public ResponseEntity <List<Habit>> getAllHabit(@RequestParam("userId") UUID userId){
         var output = service.getHabits(userId);
         return ResponseEntity.status(output.getStatus()).body(output.getResponse());
     }
@@ -49,7 +50,7 @@ public class HabitController {
      * @return status code
      */
     @PutMapping("/")
-    public ResponseEntity <Void> putHabit(@RequestParam("id") Long id, @RequestBody HabitRequestModel requestBody){
+    public ResponseEntity <Void> putHabit(@RequestParam("id") UUID id, @RequestBody HabitRequestModel requestBody){
         return ResponseEntity.status(service.putHabit(id, requestBody)).build();
     }
 
@@ -59,7 +60,7 @@ public class HabitController {
      * @return status code
      */
     @DeleteMapping("/")
-    public ResponseEntity <Void> deleteHabit (@RequestParam("id") Long id){
+    public ResponseEntity <Void> deleteHabit (@RequestParam("id") UUID id){
         return ResponseEntity.status(service.deleteHabit(id)).build();
     }
 
@@ -69,7 +70,7 @@ public class HabitController {
      * @return status code
      */
     @DeleteMapping("/bulk/")
-    public ResponseEntity <Void> deleteAllHabits (@RequestParam("userId") Long userId){
+    public ResponseEntity <Void> deleteAllHabits (@RequestParam("userId") UUID userId){
         return ResponseEntity.status(service.deleteAllHabits(userId)).build();
     }
 }

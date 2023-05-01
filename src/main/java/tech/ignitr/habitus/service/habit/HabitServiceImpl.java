@@ -11,18 +11,20 @@ import tech.ignitr.habitus.web.habit.HabitListStatusReturn;
 import tech.ignitr.habitus.web.habit.HabitRequestModel;
 import tech.ignitr.habitus.web.habit.HabitStatusReturn;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class HabitServiceImpl implements HabitService{
 
     private final HabitRepository habitRepository;
     private final UserRepository userRepository;
-    private final HabitWorkshop workshop;
 
     @Autowired
-    public HabitServiceImpl(HabitRepository habitRepository, UserRepository userRepository, HabitWorkshop workshop) {
+    public HabitServiceImpl(HabitRepository habitRepository, UserRepository userRepository) {
         this.habitRepository = habitRepository;
         this.userRepository = userRepository;
-        this.workshop = workshop;
     }
 
     //services for habit API endpoints
@@ -33,7 +35,10 @@ public class HabitServiceImpl implements HabitService{
      */
     @Override
     public HabitStatusReturn postHabit(HabitRequestModel requestBody) {
-        Habit newHabit = workshop.createHabit(requestBody);
+        Habit newHabit = new Habit(
+                userRepository.getUserById(requestBody.getId()),
+                requestBody.getTag(),
+                requestBody.getMaxQuantity());
         habitRepository.saveAndFlush(newHabit);
         return new HabitStatusReturn(newHabit, HttpStatus.CREATED);
     }
@@ -44,8 +49,8 @@ public class HabitServiceImpl implements HabitService{
      * @return HabitListStatusReturn - combination of new List with Entities and status code
      */
     @Override
-    public HabitListStatusReturn getHabits(Long userId) {
-        workshop.checkHabits(userId);
+    public HabitListStatusReturn getHabits(UUID userId) {
+        checkHabits(userId);
         if (userRepository.existsById(userId)){
             return new HabitListStatusReturn(habitRepository.findAllByUser(userRepository.getUserById(userId)), HttpStatus.OK);
         } else return new HabitListStatusReturn(null, HttpStatus.NO_CONTENT);
@@ -58,9 +63,9 @@ public class HabitServiceImpl implements HabitService{
      * @return http status code
      */
     @Override
-    public HttpStatus putHabit(Long hid, HabitRequestModel requestBody) {
-        if(habitRepository.existsById(hid)){
-            return workshop.updateHabit(requestBody);
+    public HttpStatus putHabit(UUID id, HabitRequestModel requestBody) {
+        if(habitRepository.existsById(id)){
+            return updateHabit(requestBody);
         }else return HttpStatus.NO_CONTENT;
     }
 
@@ -70,7 +75,7 @@ public class HabitServiceImpl implements HabitService{
      * @return http status code
      */
     @Override
-    public HttpStatus deleteHabit(Long id) {
+    public HttpStatus deleteHabit(UUID id) {
         if (habitRepository.existsById(id)) {
             habitRepository.delete(habitRepository.getHabitById(id));
             habitRepository.flush();
@@ -84,11 +89,76 @@ public class HabitServiceImpl implements HabitService{
      * @return http status code
      */
     @Override
-    public HttpStatus deleteAllHabits(Long userId) {
+    public HttpStatus deleteAllHabits(UUID userId) {
         User user = userRepository.getUserById(userId);
         if (!user.getHabits().isEmpty()){
             habitRepository.deleteAllByUser(user);
             return HttpStatus.OK;
         } else return HttpStatus.NO_CONTENT;
+    }
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    private HttpStatus updateHabit(HabitRequestModel requestBody) {
+        return HttpStatus.OK;
+    }
+
+    /**
+     *
+     * @param userId
+     */
+    private void checkHabits(UUID userId) {
+        List<Habit> list = habitRepository.findAllByUser(userRepository.getUserById(userId));
+        for (Habit habit : list) {
+            if(habit.getCurrentQuantity() >= habit.getMaxQuantity()){
+                habit.setDone(true);
+                habit.setDate_done(
+                        LocalDate.now());
+            }else{
+                switch (habit.getFrequency()) {
+                    case DAILY -> {
+                        if (habit.getDate_done().plusDays(1).isAfter(LocalDate.now())) {
+                            habit.setDone(false);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
+                        }
+                    }
+                    case WEEKLY -> {
+                        if (habit.getDate_done().plusWeeks(1).isAfter(LocalDate.now())) {
+                            habit.setDone(false);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
+                        }
+                    }
+                    case BIWEEKLY -> {
+                        if (habit.getDate_done().plusWeeks(2).isAfter(LocalDate.now())) {
+                            habit.setDone(false);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
+                        }
+                    }
+                    case TRIWEEKLY -> {
+                        if (habit.getDate_done().plusWeeks(3).isAfter(LocalDate.now())) {
+                            habit.setDone(false);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
+                        }
+                    }
+                    case MONTHLY -> {
+                        if (habit.getDate_done().plusMonths(1).isAfter(LocalDate.now())) {
+                            habit.setDone(false);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
+                        }
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+        habitRepository.saveAllAndFlush(list);
     }
 }

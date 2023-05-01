@@ -4,10 +4,12 @@ import org.springframework.http.ResponseEntity;
 import tech.ignitr.habitus.data.user.User;
 import tech.ignitr.habitus.web.user.UserRequestModel;
 
+import java.util.UUID;
+
 public interface UserService {
 
-    ResponseEntity<Void> createUser(UserRequestModel requestModel);
-    ResponseEntity<User> getUser(Long id);
-    ResponseEntity<User> updateUser(Long id);
-    ResponseEntity<Void> deleteUser(Long id);
+    ResponseEntity<Void> postUser(UserRequestModel requestModel);
+    ResponseEntity<User> getUser(UUID id);
+    ResponseEntity<User> putUser(UUID id);
+    ResponseEntity<Void> deleteUser(UUID id);
 }
