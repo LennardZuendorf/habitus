@@ -7,7 +7,7 @@ import tech.ignitr.habitus.data.habit.HabitRepository;
 import tech.ignitr.habitus.data.user.UserRepository;
 import tech.ignitr.habitus.web.habit.HabitRequestModel;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -27,7 +27,6 @@ public class HabitWorkshop {
      */
     public Habit createHabit(HabitRequestModel requestBody) {
         return new Habit(
-                null,
                 userRepository.getUserById(requestBody.getUserId()),
                 requestBody.getTag(),
                 requestBody.getMaxQuantity()
@@ -46,37 +45,43 @@ public class HabitWorkshop {
         for (Habit habit : list) {
             if(habit.getCurrentQuantity() >= habit.getMaxQuantity()){
                 habit.setDone(true);
-                habit.setCheck(LocalDateTime.now());
+                habit.setDate_done(
+                        LocalDate.now());
             }else{
                 switch (habit.getFrequency()) {
                     case DAILY -> {
-                        if (habit.getCheck().plusDays(1).isAfter(LocalDateTime.now())) {
+                        if (habit.getDate_done().plusDays(1).isAfter(LocalDate.now())) {
                             habit.setDone(false);
-                            habit.setCheck(null);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
                         }
                     }
                     case WEEKLY -> {
-                        if (habit.getCheck().plusWeeks(1).isAfter(LocalDateTime.now())) {
+                        if (habit.getDate_done().plusWeeks(1).isAfter(LocalDate.now())) {
                             habit.setDone(false);
-                            habit.setCheck(null);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
                         }
                     }
                     case BIWEEKLY -> {
-                        if (habit.getCheck().plusWeeks(2).isAfter(LocalDateTime.now())) {
+                        if (habit.getDate_done().plusWeeks(2).isAfter(LocalDate.now())) {
                             habit.setDone(false);
-                            habit.setCheck(null);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
                         }
                     }
                     case TRIWEEKLY -> {
-                        if (habit.getCheck().plusWeeks(3).isAfter(LocalDateTime.now())) {
+                        if (habit.getDate_done().plusWeeks(3).isAfter(LocalDate.now())) {
                             habit.setDone(false);
-                            habit.setCheck(null);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
                         }
                     }
                     case MONTHLY -> {
-                        if (habit.getCheck().plusMonths(1).isAfter(LocalDateTime.now())) {
+                        if (habit.getDate_done().plusMonths(1).isAfter(LocalDate.now())) {
                             habit.setDone(false);
-                            habit.setCheck(null);
+                            habit.setCurrentQuantity(0);
+                            habit.setDate_done(null);
                         }
                     }
                     default -> {
