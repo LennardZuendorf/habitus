@@ -29,7 +29,7 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     request.getEmail(), request.getPassword()));
-            User user = repository.findByUsername(request.getEmail()).orElseThrow(()-> new DatabaseException("User not found", HttpStatus.NOT_FOUND));
+            User user = repository.findByEmail(request.getEmail()).orElseThrow(()-> new DatabaseException("User not found", HttpStatus.NOT_FOUND));
 
             String jwtToken = tokenService.generateToken(user);
             return ResponseEntity.ok(AuthenticationResponse.builder()
