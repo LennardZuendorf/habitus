@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tech.ignitr.habitus.configuration.DatabaseException;
 import tech.ignitr.habitus.data.user.User;
 import tech.ignitr.habitus.data.user.UserRepository;
 import tech.ignitr.habitus.web.user.LoginRequest;
 import tech.ignitr.habitus.web.user.RegisterRequest;
+import tech.ignitr.habitus.web.user.UserRequest;
 
 import java.util.UUID;
 
@@ -23,10 +25,12 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseEntity<User> getUser(UUID id) {
-        if (repository.existsById(id)){
-            return ResponseEntity.status(HttpStatus.OK).body(repository.findById(id).orElseThrow(()-> new RuntimeException("User not found")));
+        try{
+            return ResponseEntity.ok(repository.findById(id)
+                .orElseThrow(()-> new DatabaseException("User not found")));
+        }catch(DatabaseException e){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     /**
@@ -34,11 +38,12 @@ public class UserServiceImpl implements UserService {
      * @return response containing the newly created user.
      */
     @Override
-    public ResponseEntity<User> putUser(UUID id) {
-        if (repository.existsById(id)){
-            return ResponseEntity.status(HttpStatus.OK).body(updateUser(id));
+    public ResponseEntity<User> putUser( UserRequest requestBody) {
+        try{
+            return ResponseEntity.ok(updateUser(requestBody));
+        } catch(DatabaseException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     /**
@@ -47,12 +52,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseEntity<Void> deleteUser(UUID id) {
-        if (repository.existsById(id)){
-            repository.deleteById(id);
+        try{
+            repository.delete(repository.findById(id)
+                    .orElseThrow(()-> new DatabaseException("user not found")));
             repository.flush();
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.ok().build();
+        } catch(DatabaseException e){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     /**
@@ -74,15 +81,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    //TODO:Implement update User
-
     /**
      *
      * @param id
      * @return
      */
-    private User updateUser(UUID id){
-        return repository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
+    private User updateUser(UserRequest requestBody) throws DatabaseException {
+        return repository.findById(requestBody.getId()).orElseThrow(()-> new DatabaseException("User not found"));
     }
 
 }

@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ignitr.habitus.data.user.User;
+import tech.ignitr.habitus.security.AuthService;
+import tech.ignitr.habitus.security.AuthenticationResponse;
 import tech.ignitr.habitus.service.user.UserService;
 
 import java.util.UUID;
@@ -13,31 +15,32 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
+    private final UserService userService;
+    private final AuthService authService;
 
-    @PostMapping(path="/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request){
-        return service.registerUser(request);
+    @PostMapping(path="/")
+    public ResponseEntity<AuthenticationResponse> putUser(@RequestBody RegisterRequest request){
+        return authService.registerUser(request);
     }
 
     @GetMapping(path="/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest request){
-        return service.loginUser(request);
+    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody LoginRequest request){
+        return authService.authenticateUser(request);
     }
 
     @GetMapping(path = "/")
     public ResponseEntity<User> getUser(@RequestParam("id") UUID id){
-        return service.getUser(id);
+        return userService.getUser(id);
     }
 
     @PutMapping(path="/")
-    public ResponseEntity<User> putUser(@RequestParam("id") UUID id){
-        return service.putUser(id);
+    public ResponseEntity<User> putUser(@RequestBody UserRequest request){
+        return userService.putUser(request);
     }
 
     @DeleteMapping(path="/")
     public ResponseEntity<Void> deleteUser(@RequestParam("id") UUID id){
-        return service.deleteUser(id);
+        return userService.deleteUser(id);
     }
 
 }
