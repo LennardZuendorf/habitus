@@ -1,4 +1,4 @@
-![Logo](https://github.com/LennardZuendorf/website_zuendorf.me/blob/main/img/projects/habitus_logo_long2.png)
+![Logo](https://github.com/LennardZuendorf/ignitus/blob/main/public/github/habitus.png)
 
 <h1>Habitus</h1>
 <h4>Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.
