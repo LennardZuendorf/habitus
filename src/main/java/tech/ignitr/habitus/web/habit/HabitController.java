@@ -16,57 +16,54 @@ public class HabitController {
 
     private final HabitService service;
 
-    //Habit API Endpoints
     /**
      * API call for creating a new habit (HabitEntity)
      * @param requestBody - all of HabitEntity params
-     * @return status code, json
+     * @return ResponseEntity containing the status code from service method and the created Habit
      */
     @PostMapping("/")
-    public ResponseEntity <Habit> postHabit(@RequestBody HabitRequestModel requestBody){
-        var output = service.postHabit(requestBody);
-        return ResponseEntity.status(output.getStatus()).body(output.getResponse());
+    public ResponseEntity <Habit> postHabit(@RequestBody HabitRequest requestBody){
+        return service.postHabit(requestBody);
     }
 
     /**
      * API call for getting all habits (HabitEntity) by userID
      * @param userId - the user ID to be selected by
-     * @return status code, json
+     * @return ResponseEntity containing the status code from service method and a list of Habits
      */
     @GetMapping("/")
     public ResponseEntity <List<Habit>> getAllHabit(@RequestParam("userId") UUID userId){
-        var output = service.getHabits(userId);
-        return ResponseEntity.status(output.getStatus()).body(output.getResponse());
+        return service.getHabits(userId);
     }
 
     /**
      * API call for updating habit (HabitEntity)
      * @param id - id of the HabitEntry to add
-     * @param requestBody - all of HabitEntity params
-     * @return status code
+     * @param requestBody - all Habit params
+     * @return ResponseEntity containing the status code from service method
      */
     @PutMapping("/")
-    public ResponseEntity <Void> putHabit(@RequestParam("id") UUID id, @RequestBody HabitRequestModel requestBody){
-        return ResponseEntity.status(service.putHabit(id, requestBody)).build();
+    public ResponseEntity <Habit> putHabit(@RequestBody HabitRequest requestBody){
+        return service.putHabit(requestBody);
     }
 
     /**
      * API call for deleting a habit (HabitEntity)
      * @param id - id of the habit that should be deleted
-     * @return status code
+     * @return ResponseEntity containing the status code from service method
      */
     @DeleteMapping("/")
     public ResponseEntity <Void> deleteHabit (@RequestParam("id") UUID id){
-        return ResponseEntity.status(service.deleteHabit(id)).build();
+        return service.deleteHabit(id);
     }
 
     /**
      * API call for deleting all habits (HabitEntity)
      * @param userId - id of the user all habits should be deleted from
-     * @return status code
+     * @return ResponseEntity containing the status code from service method
      */
     @DeleteMapping("/bulk/")
     public ResponseEntity <Void> deleteAllHabits (@RequestParam("userId") UUID userId){
-        return ResponseEntity.status(service.deleteAllHabits(userId)).build();
+        return service.deleteAllHabits(userId);
     }
 }

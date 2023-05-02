@@ -1,19 +1,19 @@
 package tech.ignitr.habitus.service.habit;
 
-import org.springframework.http.HttpStatus;
-import tech.ignitr.habitus.web.habit.HabitListStatusReturn;
-import tech.ignitr.habitus.web.habit.HabitRequestModel;
-import tech.ignitr.habitus.web.habit.HabitStatusReturn;
+import org.springframework.http.ResponseEntity;
+import tech.ignitr.habitus.data.habit.Habit;
+import tech.ignitr.habitus.web.habit.HabitRequest;
 
+import java.util.List;
 import java.util.UUID;
 
 
 public interface HabitService {
 
-        HabitStatusReturn postHabit(HabitRequestModel requestBody) throws Exception;
-        HabitListStatusReturn getHabits(UUID userId);
-        HttpStatus putHabit(UUID id, HabitRequestModel requestBody);
-        HttpStatus deleteHabit(UUID id);
-        HttpStatus deleteAllHabits(UUID userId);
+        ResponseEntity<Habit> postHabit(HabitRequest requestBody);
+        ResponseEntity<List<Habit>> getHabits(UUID userId);
+        ResponseEntity<Habit> putHabit(HabitRequest requestBody);
+        ResponseEntity<Void> deleteHabit(UUID id);
+        ResponseEntity<Void> deleteAllHabits(UUID userId);
 
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-public class HabitRequestModel {
+public class HabitRequest {
 
     private UUID id;
     private UUID userId;

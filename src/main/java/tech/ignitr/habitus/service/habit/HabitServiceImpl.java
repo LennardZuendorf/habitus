@@ -2,14 +2,14 @@ package tech.ignitr.habitus.service.habit;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tech.ignitr.habitus.configuration.DatabaseException;
 import tech.ignitr.habitus.data.habit.Habit;
 import tech.ignitr.habitus.data.habit.HabitRepository;
 import tech.ignitr.habitus.data.user.User;
 import tech.ignitr.habitus.data.user.UserRepository;
-import tech.ignitr.habitus.web.habit.HabitListStatusReturn;
-import tech.ignitr.habitus.web.habit.HabitRequestModel;
-import tech.ignitr.habitus.web.habit.HabitStatusReturn;
+import tech.ignitr.habitus.web.habit.HabitRequest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,8 +29,9 @@ public class HabitServiceImpl implements HabitService{
      * @return HabitStatusReturn - combination of new Entity and status code
      */
     @Override
-    public HabitStatusReturn postHabit(HabitRequestModel requestBody) throws Exception {
+    public ResponseEntity<Habit> postHabit(HabitRequest requestBody){
         Habit newHabit = Habit.builder()
+                .id(UUID.randomUUID())
                 .user(new User())
                 .tag(requestBody.getTag())
                 .frequency(requestBody.getFrequency())
@@ -39,78 +40,88 @@ public class HabitServiceImpl implements HabitService{
                 .done(false)
                 .build();
         habitRepository.saveAndFlush(newHabit);
-        return new HabitStatusReturn(newHabit, HttpStatus.CREATED);
+        return ResponseEntity.ok(newHabit);
     }
 
     /**
      * getting a list of all habits by UserID
      * @param userId - the user ID to be selected by
-     * @return HabitListStatusReturn - combination of new List with Entities and status code
+     * @return ResponseEntity with either list of habits and ok code or empty list and not found code
      */
     @Override
-    public HabitListStatusReturn getHabits(UUID userId) {
-        checkHabits(userId);
-        if (userRepository.existsById(userId)){
-            return new HabitListStatusReturn(habitRepository.findAllByUser(userRepository.getUserById(userId)), HttpStatus.OK);
-        } else return new HabitListStatusReturn(null, HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<Habit>> getHabits(UUID userId) {
+        try{
+            checkHabits(userId);
+            return ResponseEntity.ok(habitRepository.findAllByUser(userRepository
+                            .findById(userId).orElseThrow(()-> new DatabaseException("user not found"))
+                    ).orElseThrow(()-> new DatabaseException("data not found")));
+        }catch (DatabaseException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     /**
      * updating a HabitEntity in the database
      * @param id - id of the habit to update
      * @param requestBody - all of HabitEntity params
-     * @return http status code
+     * @return empty response with http status code
      */
     @Override
-    public HttpStatus putHabit(UUID id, HabitRequestModel requestBody) {
-        if(habitRepository.existsById(id)){
-            return updateHabit(requestBody);
-        }else return HttpStatus.NO_CONTENT;
+    public ResponseEntity<Habit> putHabit(HabitRequest requestBody) {
+        try{
+            return ResponseEntity.ok(updateHabit(requestBody));
+        }catch(DatabaseException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
      * delete a habit (HabitEntity)
      * @param id - id of the habit that should be deleted
-     * @return http status code
+     * @return hempty response with http status code
      */
     @Override
-    public HttpStatus deleteHabit(UUID id) {
-        if (habitRepository.existsById(id)) {
-            habitRepository.delete(habitRepository.getHabitById(id));
+    public ResponseEntity<Void> deleteHabit(UUID id) {
+        try{
+            habitRepository.delete(habitRepository.findById(id).orElseThrow(()-> new DatabaseException("habit not found")));
             habitRepository.flush();
-            return HttpStatus.OK;
-        } else return HttpStatus.NO_CONTENT;
+            return ResponseEntity.ok().build();
+        }catch(DatabaseException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
      * deleting all habit (HabitEntity)
      * @param userId - id of the habit that should be deleted
-     * @return http status code
+     * @return empty response with http status code
      */
     @Override
-    public HttpStatus deleteAllHabits(UUID userId) {
-        User user = userRepository (userId);
-        if (!user.getHabits().isEmpty()){
-            habitRepository.deleteAllByUser(user);
-            return HttpStatus.OK;
-        } else return HttpStatus.NO_CONTENT;
+    public ResponseEntity<Void> deleteAllHabits(UUID userId) {
+        try{
+            habitRepository.deleteAllByUser(userRepository.findById(userId).orElseThrow(()-> new DatabaseException("user not found")));
+            habitRepository.flush();
+            return ResponseEntity.ok().build();
+        }catch(DatabaseException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    private Habit updateHabit(HabitRequest requestBody) throws DatabaseException {
+        Habit updatable = habitRepository.findById(requestBody.getId()).orElseThrow(()-> new DatabaseException("habit not found"));
+        return new Habit();
     }
 
     /**
      *
-     * @param requestBody
-     * @return
+     * @param userId to search for all habits to check/update
+     * @throws DatabaseException if user or data was not found
      */
-    private HttpStatus updateHabit(HabitRequestModel requestBody) {
-        return HttpStatus.OK;
-    }
+    private void checkHabits(UUID userId) throws DatabaseException {
+        List<Habit> list = habitRepository.findAllByUser(userRepository.findById(userId)
+                        .orElseThrow(() -> new DatabaseException("user not found")))
+                .orElseThrow(() -> new DatabaseException("data not found"));
 
-    /**
-     *
-     * @param userId
-     */
-    private void checkHabits(UUID userId) {
-        List<Habit> list = habitRepository.findAllByUser(userRepository.getUserById(userId));
         for (Habit habit : list) {
             if(habit.getCurrentQuantity() >= habit.getMaxQuantity()){
                 habit.setDone(true);
