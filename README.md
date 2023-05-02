@@ -21,7 +21,8 @@ Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
 
 <h2>🗳️ Status:</h2>
 
-[![Gradle Build](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml/badge.svg)](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml)
+[![Build Status](https://app.travis-ci.com/LennardZuendorf/habitus.svg?branch=production)](https://app.travis-ci.com/LennardZuendorf/habitus)
+
 
 <h2>👨‍💻 Author and Credits:</h2>
 
