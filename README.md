@@ -1,4 +1,4 @@
-![Logo](https://github.com/LennardZuendorf/website_zuendorf.me/blob/main/img/projects/habitus_logo_long2.png)
+![Logo](https://github.com/LennardZuendorf/ignitus/blob/main/public/github/habitus.png)
 
 # Habitus
 
