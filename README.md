@@ -1,8 +1,10 @@
 ![Logo](https://github.com/LennardZuendorf/website_zuendorf.me/blob/main/img/projects/habitus_logo_long2.png)
 
-<h1 align="center">Hi 👋, I'm Lennard</h1>
-<h3 align="center">Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.<
-Originally based on Java, Spring and Thymeleaf with Vue.js via cdn. Now it's just a spring backend service that I might use as part of another project.</h3>
+<h1>Habitus</h1>
+<h4>Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.<
+Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
+
+<h4>Now it's just a spring backend service that I might use as part of another project.</h4>
 
 <h2> tech stack: </h2>
 
@@ -17,11 +19,11 @@ Originally based on Java, Spring and Thymeleaf with Vue.js via cdn. Now it's jus
 - adding goal tracking abilities
 - integrating into a bigger project idea ("Unitum")
 
-<h2"> status: </h2>
+<h2> status: </h2>
 
 [![Gradle Build](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml/badge.svg)](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml)
 
-<h2> author and credit: </h2>
+<h2> author and credits: </h2>
 
 **Author:** [@LennardZuendorf](https://github.com/LennardZuendorf)
 
