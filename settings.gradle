@@ -1,5 +1,3 @@
-rootProject.name = 'habitus'
-
 plugins {
     id("com.gradle.enterprise") version("3.9")
 }
@@ -13,5 +11,7 @@ gradleEnterprise {
         }
     }
 }
+
+rootProject.name = 'habitus'
 
 
