@@ -1,6 +1,7 @@
 package tech.ignitr.habitus.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +29,7 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     request.getEmail(), request.getPassword()));
-            User user = repository.findByUsername(request.getEmail()).orElseThrow(()-> new DatabaseException("User not found"));
+            User user = repository.findByUsername(request.getEmail()).orElseThrow(()-> new DatabaseException("User not found", HttpStatus.NOT_FOUND));
 
             String jwtToken = tokenService.generateToken(user);
             return ResponseEntity.ok(AuthenticationResponse.builder()

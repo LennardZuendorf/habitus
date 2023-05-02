@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<User> getUser(UUID id) {
         try{
             return ResponseEntity.ok(repository.findById(id)
-                .orElseThrow(()-> new DatabaseException("User not found")));
+                .orElseThrow(()-> new DatabaseException("User not found", HttpStatus.NOT_FOUND)));
         }catch(DatabaseException e){
             return ResponseEntity.notFound().build();
         }
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         try{
             return ResponseEntity.ok(updateUser(requestBody));
         } catch(DatabaseException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(e.getHttpStatus()).build();
         }
     }
 
@@ -54,11 +54,11 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<Void> deleteUser(UUID id) {
         try{
             repository.delete(repository.findById(id)
-                    .orElseThrow(()-> new DatabaseException("user not found")));
+                    .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND)));
             repository.flush();
             return ResponseEntity.ok().build();
         } catch(DatabaseException e){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(e.getHttpStatus()).build();
         }
     }
 
@@ -87,7 +87,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     private User updateUser(UserRequest requestBody) throws DatabaseException {
-        return repository.findById(requestBody.getId()).orElseThrow(()-> new DatabaseException("User not found"));
+        return repository.findById(requestBody.getId())
+                .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND));
     }
 
 }

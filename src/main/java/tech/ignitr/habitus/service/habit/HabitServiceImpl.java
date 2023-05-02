@@ -53,8 +53,8 @@ public class HabitServiceImpl implements HabitService{
         try{
             checkHabits(userId);
             return ResponseEntity.ok(habitRepository.findAllByUser(userRepository
-                            .findById(userId).orElseThrow(()-> new DatabaseException("user not found"))
-                    ).orElseThrow(()-> new DatabaseException("data not found")));
+                            .findById(userId).orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND))
+                    ).orElseThrow(()-> new DatabaseException("data not found", HttpStatus.NO_CONTENT)));
         }catch (DatabaseException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -62,7 +62,6 @@ public class HabitServiceImpl implements HabitService{
 
     /**
      * updating a HabitEntity in the database
-     * @param id - id of the habit to update
      * @param requestBody - all of HabitEntity params
      * @return empty response with http status code
      */
@@ -83,7 +82,8 @@ public class HabitServiceImpl implements HabitService{
     @Override
     public ResponseEntity<Void> deleteHabit(UUID id) {
         try{
-            habitRepository.delete(habitRepository.findById(id).orElseThrow(()-> new DatabaseException("habit not found")));
+            habitRepository.delete(habitRepository.findById(id)
+                    .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND)));
             habitRepository.flush();
             return ResponseEntity.ok().build();
         }catch(DatabaseException e){
@@ -99,7 +99,8 @@ public class HabitServiceImpl implements HabitService{
     @Override
     public ResponseEntity<Void> deleteAllHabits(UUID userId) {
         try{
-            habitRepository.deleteAllByUser(userRepository.findById(userId).orElseThrow(()-> new DatabaseException("user not found")));
+            habitRepository.deleteAllByUser(userRepository.findById(userId)
+                    .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND)));
             habitRepository.flush();
             return ResponseEntity.ok().build();
         }catch(DatabaseException e){
@@ -108,7 +109,8 @@ public class HabitServiceImpl implements HabitService{
     }
 
     private Habit updateHabit(HabitRequest requestBody) throws DatabaseException {
-        Habit updatable = habitRepository.findById(requestBody.getId()).orElseThrow(()-> new DatabaseException("habit not found"));
+        Habit updatable = habitRepository.findById(requestBody.getId())
+                .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NO_CONTENT));
         return new Habit();
     }
 
@@ -119,8 +121,8 @@ public class HabitServiceImpl implements HabitService{
      */
     private void checkHabits(UUID userId) throws DatabaseException {
         List<Habit> list = habitRepository.findAllByUser(userRepository.findById(userId)
-                        .orElseThrow(() -> new DatabaseException("user not found")))
-                .orElseThrow(() -> new DatabaseException("data not found"));
+                        .orElseThrow(() -> new DatabaseException("user not found", HttpStatus.NOT_FOUND)))
+                .orElseThrow(() -> new DatabaseException("data not found", HttpStatus.NO_CONTENT));
 
         for (Habit habit : list) {
             if(habit.getCurrentQuantity() >= habit.getMaxQuantity()){
