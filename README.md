@@ -1,24 +1,31 @@
 ![Logo](https://github.com/LennardZuendorf/ignitus/blob/main/public/github/habitus.png)
 
-# Habitus
+<h1>Habitus</h1>
+<h4>Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.
+Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
 
-Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.
-Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.
+<h4>Now a spring backend build in java and on supabase that I might use as part of another project.</h4>
 
-Habitus supports a color mode, persistant saving of habits (and bringing them back, when they are due), editing and deleting your habits.
-
-## Tech Stack
-
-**Client:** HTML, CSS, HTMX
+<h2>🏗️ Tech Stack:</h2>
 
 **Server:** Java, Spring Boot
 
-**Hosting, Database, Auth:** DigitalOcean, Supabase
+**Hosting, Database:** DigitalOcean (Docker), Supabase PostgreSQL
 
-## Status
+<h2>🚧 Roadmap:</h2>
 
-[![Gradle Build](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml/badge.svg)](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml)
+- updating Auth to use Supabase GoTrue server
+- implementing nice to have features (i.e. savin icon data)
+- adding goal tracking abilities
+- integrating into a bigger project idea ("Unitum")
 
-## Author
+<h2>🗳️ Status:</h2>
 
-- [@LennardZuendorf](https://github.com/LennardZuendorf)
+[![Build Status](https://app.travis-ci.com/LennardZuendorf/habitus.svg?branch=production)](https://app.travis-ci.com/LennardZuendorf/habitus)
+
+
+<h2>👨‍💻 Author and Credits:</h2>
+
+**Author:** [@LennardZuendorf](https://github.com/LennardZuendorf)
+
+- This project is using some resources from AmigosCode's tutorial on [SpringBoot3 + Spring Security 6](https://www.youtube.com/watch?v=KxqlJblhzfI&t=2124s&ab_channel=Amigoscode)
