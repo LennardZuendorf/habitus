@@ -15,7 +15,7 @@ import tech.ignitr.habitus.data.user.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
-public class AuthenticationConfig {
+public class AuthConfig {
 
     private final UserRepository repository;
 

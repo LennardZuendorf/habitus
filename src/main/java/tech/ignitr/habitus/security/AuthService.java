@@ -1,66 +1,59 @@
-/**
- *
- * @author Lennard Zündorf
- * inspired by/taken from: https://www.youtube.com/watch?v=KxqlJblhzfI&t=2124s&ab_channel=Amigoscode
- * and https://github.com/ChangeNode/spring-boot-supabase
- */
-
 package tech.ignitr.habitus.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tech.ignitr.habitus.configuration.DatabaseException;
 import tech.ignitr.habitus.data.user.User;
+import tech.ignitr.habitus.data.user.UserRepository;
+import tech.ignitr.habitus.web.user.LoginRequest;
+import tech.ignitr.habitus.web.user.RegisterRequest;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    @Value("${supabase.jwt_secret}")
-    String jwtSecret;
+    private final UserRepository repository;
+    private final PasswordEncoder encoder;
+    private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
-        final Claims claims = Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claimsResolver.apply(claims);
+    public ResponseEntity<AuthenticationResponse> authenticateUser(LoginRequest request) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    request.getEmail(), request.getPassword()));
+            User user = repository.findByUsername(request.getEmail()).orElseThrow(()-> new DatabaseException("User not found"));
+
+            String jwtToken = tokenService.generateToken(user);
+            return ResponseEntity.ok(AuthenticationResponse.builder()
+                    .token(jwtToken)
+                    .user(user)
+                    .build());
+        } catch (AuthenticationException ignored) {
+            return ResponseEntity.badRequest().build();
+        } catch (DatabaseException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    public String generateToken(Map<String,Object> claims, User userDetails){
-
-        return Jwts
-                .builder()
-                .setSubject(userDetails.getUsername())
-                .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*72))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
+    public ResponseEntity<AuthenticationResponse> registerUser(RegisterRequest request) {
+        User newUser = User.builder()
+                .id(UUID.randomUUID())
+                .email(request.getEmail())
+                .name(request.getName())
+                .password(encoder.encode(request.getPassword()))
+                .build();
+        repository.saveAndFlush(newUser);
+        String jwtToken = tokenService.generateToken(newUser);
+        return ResponseEntity.ok(AuthenticationResponse.builder()
+                .token(jwtToken)
+                .user(newUser)
+                .build());
     }
-
-    public Boolean validateToken(String token, User userDetails){
-        final String username = extractClaim(token, Claims::getSubject);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-    }
-
-    private boolean isTokenExpired(String token){
-        return extractClaim(token, Claims::getExpiration).before(new Date (System.currentTimeMillis()));
-    }
-
-    private Key getSignInKey() {
-        byte[] keyBites = Decoders.BASE64.decode(jwtSecret);
-        return Keys.hmacShaKeyFor(keyBites);
-    }
-
 }
