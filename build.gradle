@@ -7,6 +7,16 @@ plugins {
     id("io.freefair.lombok") version "8.0.1"
 }
 
+gradleEnterprise {
+    if (System.getenv("CI") != null) {
+        buildScan {
+            publishAlways()
+            termsOfServiceUrl = "https://gradle.com/terms-of-service"
+            termsOfServiceAgree = "yes"
+        }
+    }
+}
+
 group = 'techn.ignitr'
 version = '2.1.0'
 
