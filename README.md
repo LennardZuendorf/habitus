@@ -10,7 +10,7 @@ Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
 
 **Server:** Java, Spring Boot
 
-**Hosting, Database:** DigitalOcean (Docker), Supabase PostgreSQL
+**Hosting, Database:** Docker Container, PostgreSQL in Docker
 
 <h2>🚧 Roadmap:</h2>
 
