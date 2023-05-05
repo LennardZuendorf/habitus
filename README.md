@@ -5,7 +5,7 @@
 <h4>Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.
 Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
 
-<h4>Now a spring backend build in java and on supabase that I might use as part of another project.</h4>
+<h4>Now a spring backend build in java and running on google cloud platform., that I might use as part of another project ("UNITUM").</h4>
 
 <h2>🏗️ Tech Stack:</h2>
 
