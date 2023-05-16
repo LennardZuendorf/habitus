@@ -1,4 +1,4 @@
-![Logo](https://github.com/LennardZuendorf/ignitus/blob/main/public/github/habitus.png)
+<img src='https://ignitr.tech/static/images/habitus/intro.png' alt= “Logo” width="250">
 
 <h1>Habitus</h1>
 
