@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import tech.ignitr.habitus.data.configuration.DatabaseException;
 import tech.ignitr.habitus.data.users.User;
 import tech.ignitr.habitus.data.users.UserRepository;
-import tech.ignitr.habitus.web.auth.LoginRequest;
+import tech.ignitr.habitus.web.auth.AuthModel;
 import tech.ignitr.habitus.web.auth.RegisterRequest;
 
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class AuthService {
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
 
-    public ResponseEntity<AuthenticationResponse> authenticateUser(LoginRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticateUser(AuthModel request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     request.getEmail(), request.getPassword()));
@@ -36,6 +36,7 @@ public class AuthService {
                     .token(jwtToken)
                     .user(user)
                     .build());
+
         } catch (AuthenticationException ignored) {
             return ResponseEntity.badRequest().build();
         } catch (DatabaseException e) {
@@ -44,17 +45,55 @@ public class AuthService {
     }
 
     public ResponseEntity<AuthenticationResponse> registerUser(RegisterRequest request) {
-        User newUser = User.builder()
-                .id(UUID.randomUUID())
-                .email(request.getEmail())
-                .name(request.getName())
-                .password(encoder.encode(request.getPassword()))
-                .build();
-        repository.saveAndFlush(newUser);
-        String jwtToken = tokenService.generateToken(newUser);
-        return ResponseEntity.ok(AuthenticationResponse.builder()
-                .token(jwtToken)
-                .user(newUser)
-                .build());
+        try{
+            if(repository.existsByEmail(request.getEmail())){
+                throw new DatabaseException("Email already in use", HttpStatus.CONFLICT);
+            };
+
+            User newUser = User.builder()
+                            .id(UUID.randomUUID())
+                            .email(request.getEmail())
+                            .name(request.getName())
+                            .password(encoder.encode(request.getPassword()))
+                            .build();
+            repository.saveAndFlush(newUser);
+
+            String jwtToken = tokenService.generateToken(newUser);
+            return ResponseEntity.ok(AuthenticationResponse.builder()
+                    .token(jwtToken)
+                    .user(newUser)
+                    .build());
+
+        }catch (DatabaseException e) {
+            return ResponseEntity.status(e.getHttpStatus()).build();
+        }
+    }
+
+    public ResponseEntity<AuthenticationResponse> updateUserCredentials(AuthModel model, UUID id) {
+        try{
+            User updateUser = repository.findById(id)
+                    .orElseThrow(()-> new DatabaseException("User not found", HttpStatus.NOT_FOUND));
+            User newUser = User.builder()
+                    .id(updateUser.getId())
+                    .email(model.getEmail())
+                    .name(updateUser.getName())
+                    .password(encoder.encode(model.getPassword()))
+                    .build();
+            repository.saveAndFlush(newUser);
+
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    model.getEmail(), model.getPassword()));
+
+            String jwtToken = tokenService.generateToken(newUser);
+            return ResponseEntity.ok(AuthenticationResponse.builder()
+                    .token(jwtToken)
+                    .user(newUser)
+                    .build());
+
+        } catch (AuthenticationException ignored) {
+            return ResponseEntity.badRequest().build();
+        } catch (DatabaseException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

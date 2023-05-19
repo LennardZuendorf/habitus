@@ -14,7 +14,7 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping(path=baseURL+"/auth/login")
-    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody LoginRequest request){
+    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody AuthModel request){
         return authService.authenticateUser(request);
     }
 
