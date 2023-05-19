@@ -46,9 +46,9 @@ public class AuthService {
 
     public ResponseEntity<AuthenticationResponse> registerUser(RegisterRequest request) {
         try{
-            if(repository.existsByEmail(request.getEmail())){
+            if(repository.existsByEmail(request.getEmail())) {
                 throw new DatabaseException("Email already in use", HttpStatus.CONFLICT);
-            };
+            }
 
             User newUser = User.builder()
                             .id(UUID.randomUUID())

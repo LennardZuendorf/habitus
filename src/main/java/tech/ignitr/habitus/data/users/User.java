@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import tech.ignitr.habitus.data.habits.Habit;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,11 +40,11 @@ public class User implements UserDetails {
     private String password;
 
     /**
-     * @return
+     * @return authorities
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singleton((GrantedAuthority) () -> "DEFAULT_USER");
     }
 
     /**

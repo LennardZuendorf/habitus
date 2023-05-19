@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ignitr.habitus.data.habits.Habit;
 import tech.ignitr.habitus.data.users.User;
-import tech.ignitr.habitus.service.auth.AuthService;
 import tech.ignitr.habitus.service.auth.AuthenticationResponse;
 import tech.ignitr.habitus.service.habits.HabitService;
 import tech.ignitr.habitus.service.users.UserService;
@@ -20,7 +19,6 @@ public class UserController {
     private final String baseURL = "/api";
     private final UserService userService;
     private final HabitService service;
-    private final AuthService authService;
 
     @GetMapping(path = baseURL+"/users/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") UUID id){
