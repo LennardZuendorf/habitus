@@ -2,9 +2,9 @@ package tech.ignitr.habitus.service.user;
 
 import org.springframework.http.ResponseEntity;
 import tech.ignitr.habitus.data.user.User;
-import tech.ignitr.habitus.web.user.LoginRequest;
-import tech.ignitr.habitus.web.user.RegisterRequest;
-import tech.ignitr.habitus.web.user.UserRequest;
+import tech.ignitr.habitus.web.auth.LoginRequest;
+import tech.ignitr.habitus.web.auth.RegisterRequest;
+import tech.ignitr.habitus.web.users.UserRequest;
 
 import java.util.UUID;
 

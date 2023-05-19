@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.web.habit;
+package tech.ignitr.habitus.web.habits;
 
 import lombok.Getter;
 import tech.ignitr.habitus.data.habit.Frequency;

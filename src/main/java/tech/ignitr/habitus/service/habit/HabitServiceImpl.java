@@ -9,7 +9,7 @@ import tech.ignitr.habitus.data.habit.Habit;
 import tech.ignitr.habitus.data.habit.HabitRepository;
 import tech.ignitr.habitus.data.user.User;
 import tech.ignitr.habitus.data.user.UserRepository;
-import tech.ignitr.habitus.web.habit.HabitRequest;
+import tech.ignitr.habitus.web.habits.HabitRequest;
 
 import java.time.LocalDate;
 import java.util.List;

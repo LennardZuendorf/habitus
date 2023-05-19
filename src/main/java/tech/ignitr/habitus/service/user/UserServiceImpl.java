@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import tech.ignitr.habitus.configuration.DatabaseException;
 import tech.ignitr.habitus.data.user.User;
 import tech.ignitr.habitus.data.user.UserRepository;
-import tech.ignitr.habitus.web.user.LoginRequest;
-import tech.ignitr.habitus.web.user.RegisterRequest;
-import tech.ignitr.habitus.web.user.UserRequest;
+import tech.ignitr.habitus.web.auth.LoginRequest;
+import tech.ignitr.habitus.web.auth.RegisterRequest;
+import tech.ignitr.habitus.web.users.UserRequest;
 
 import java.util.UUID;
 
