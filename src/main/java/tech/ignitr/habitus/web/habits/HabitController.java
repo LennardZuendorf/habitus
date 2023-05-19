@@ -21,7 +21,7 @@ public class HabitController {
      * @return ResponseEntity containing the status code from service method and the created Habit
      */
     @PostMapping(baseURL+"/habits")
-    public ResponseEntity <Habit> postHabit(@RequestBody HabitRequest requestBody){
+    public ResponseEntity <Habit> postHabit(@RequestBody HabitModel requestBody){
         return service.postHabit(requestBody);
     }
 
@@ -31,7 +31,7 @@ public class HabitController {
      * @return ResponseEntity containing the status code from service method
      */
     @PutMapping(baseURL+"/habits")
-    public ResponseEntity <Habit> putHabit(@RequestBody HabitRequest requestBody){
+    public ResponseEntity <Habit> putHabit(@RequestBody HabitModel requestBody){
         return service.putHabit(requestBody);
     }
 

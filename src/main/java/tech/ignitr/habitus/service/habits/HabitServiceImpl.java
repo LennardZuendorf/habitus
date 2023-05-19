@@ -9,7 +9,7 @@ import tech.ignitr.habitus.data.habits.Habit;
 import tech.ignitr.habitus.data.habits.HabitRepository;
 import tech.ignitr.habitus.data.users.User;
 import tech.ignitr.habitus.data.users.UserRepository;
-import tech.ignitr.habitus.web.habits.HabitRequest;
+import tech.ignitr.habitus.web.habits.HabitModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,22 +25,28 @@ public class HabitServiceImpl implements HabitService{
     //services for habit API endpoints
     /**
      * saving a new habit to database
-     * @param requestBody - all of HabitEntity params
+     * @param model - all of HabitEntity params
      * @return HabitStatusReturn - combination of new Entity and status code
      */
     @Override
-    public ResponseEntity<Habit> postHabit(HabitRequest requestBody){
-        Habit newHabit = Habit.builder()
-                .id(UUID.randomUUID())
-                .user(new User())
-                .tag(requestBody.getTag())
-                .frequency(requestBody.getFrequency())
-                .currentQuantity(0)
-                .maxQuantity(requestBody.getMaxQuantity())
-                .done(false)
-                .build();
-        habitRepository.saveAndFlush(newHabit);
-        return ResponseEntity.ok(newHabit);
+    public ResponseEntity<Habit> postHabit(HabitModel model){
+        try {
+            User user = userRepository.findById(model.getUserId())
+                    .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND));
+            Habit newHabit = Habit.builder()
+                    .id(UUID.randomUUID())
+                    .user(user)
+                    .tag(model.getTag())
+                    .frequency(model.getFrequency())
+                    .currentQuantity(0)
+                    .maxQuantity(model.getMaxQuantity())
+                    .done(false)
+                    .build();
+            habitRepository.saveAndFlush(newHabit);
+            return ResponseEntity.ok(newHabit);
+        }catch (DatabaseException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     /**
@@ -52,9 +58,9 @@ public class HabitServiceImpl implements HabitService{
     public ResponseEntity<List<Habit>> getHabits(UUID userId) {
         try{
             checkHabits(userId);
-            return ResponseEntity.ok(habitRepository.findAllByUser(userRepository
-                            .findById(userId).orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND))
-                    ).orElseThrow(()-> new DatabaseException("data not found", HttpStatus.NO_CONTENT)));
+            return ResponseEntity.ok(habitRepository.findAllByUser(userRepository.findById(userId)
+                    .orElseThrow(()-> new DatabaseException("data not found", HttpStatus.NO_CONTENT))
+                ).orElseThrow(()-> new DatabaseException("data not found", HttpStatus.NO_CONTENT)));
         }catch (DatabaseException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -62,15 +68,27 @@ public class HabitServiceImpl implements HabitService{
 
     /**
      * updating a HabitEntity in the database
-     * @param requestBody - all of HabitEntity params
+     * @param model - all of HabitEntity params
      * @return empty response with http status code
      */
     @Override
-    public ResponseEntity<Habit> putHabit(HabitRequest requestBody) {
-        try{
-            return ResponseEntity.ok(updateHabit(requestBody));
-        }catch(DatabaseException e){
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Habit> putHabit(HabitModel model) {
+        try {
+            habitRepository.findById(model.getId())
+                    .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND));
+            Habit newHabit = Habit.builder()
+                    .id(UUID.randomUUID())
+                    .user(userRepository.getReferenceById(model.getUserId()))
+                    .tag(model.getTag())
+                    .frequency(model.getFrequency())
+                    .currentQuantity(0)
+                    .maxQuantity(model.getMaxQuantity())
+                    .done(false)
+                    .build();
+            habitRepository.saveAndFlush(newHabit);
+            return ResponseEntity.ok(newHabit);
+        }catch (DatabaseException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
@@ -106,12 +124,6 @@ public class HabitServiceImpl implements HabitService{
         }catch(DatabaseException e){
             return ResponseEntity.notFound().build();
         }
-    }
-
-    private Habit updateHabit(HabitRequest requestBody) throws DatabaseException {
-        Habit updatable = habitRepository.findById(requestBody.getId())
-                .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NO_CONTENT));
-        return new Habit();
     }
 
     /**
