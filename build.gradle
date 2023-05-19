@@ -1,14 +1,18 @@
-
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.6'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'org.jetbrains.kotlin.jvm' version '1.8.21'
-    id("io.freefair.lombok") version "8.0.1"
+    id 'com.avast.gradle.docker-compose' version '0.14.0'
+    id 'io.freefair.lombok' version '8.0.1'
 }
 
-group = 'techn.ignitr'
+group = 'tech.ignitr'
 version = '2.1.0'
+
+repositories {
+    mavenCentral()
+}
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(18))
@@ -18,8 +22,17 @@ kotlin {
     jvmToolchain(18)
 }
 
-repositories {
-    mavenCentral()
+dockerCompose {
+    useComposeFiles.add("src/test/resources/docker-compose.yaml")
+    isRequiredBy(tasks.test)
+}
+
+tasks.test {
+    doFirst {
+        dockerCompose.exposeAsEnvironment(test)
+    }
+
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -33,9 +46,5 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }
 
