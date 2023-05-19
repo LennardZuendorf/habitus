@@ -25,7 +25,7 @@ import java.util.function.Function;
 @Service
 public class TokenService {
 
-    @Value("${supabase.jwt_secret}")
+    @Value("${jwt_secret}")
     String jwtSecret;
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
