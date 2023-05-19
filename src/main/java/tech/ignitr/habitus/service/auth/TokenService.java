@@ -5,7 +5,7 @@
  * and https://github.com/ChangeNode/spring-boot-supabase
  */
 
-package tech.ignitr.habitus.security;
+package tech.ignitr.habitus.service.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import tech.ignitr.habitus.data.user.User;
+import tech.ignitr.habitus.data.users.User;
 
 import java.security.Key;
 import java.util.Date;

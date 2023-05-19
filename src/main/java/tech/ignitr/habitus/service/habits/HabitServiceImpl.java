@@ -1,14 +1,14 @@
-package tech.ignitr.habitus.service.habit;
+package tech.ignitr.habitus.service.habits;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import tech.ignitr.habitus.configuration.DatabaseException;
-import tech.ignitr.habitus.data.habit.Habit;
-import tech.ignitr.habitus.data.habit.HabitRepository;
-import tech.ignitr.habitus.data.user.User;
-import tech.ignitr.habitus.data.user.UserRepository;
+import tech.ignitr.habitus.data.configuration.DatabaseException;
+import tech.ignitr.habitus.data.habits.Habit;
+import tech.ignitr.habitus.data.habits.HabitRepository;
+import tech.ignitr.habitus.data.users.User;
+import tech.ignitr.habitus.data.users.UserRepository;
 import tech.ignitr.habitus.web.habits.HabitRequest;
 
 import java.time.LocalDate;

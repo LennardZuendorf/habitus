@@ -3,10 +3,9 @@ package tech.ignitr.habitus.web.habits;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.ignitr.habitus.data.habit.Habit;
-import tech.ignitr.habitus.service.habit.HabitService;
+import tech.ignitr.habitus.data.habits.Habit;
+import tech.ignitr.habitus.service.habits.HabitService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

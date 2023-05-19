@@ -1,7 +1,7 @@
 package tech.ignitr.habitus.web.habits;
 
 import lombok.Getter;
-import tech.ignitr.habitus.data.habit.Frequency;
+import tech.ignitr.habitus.data.habits.Frequency;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

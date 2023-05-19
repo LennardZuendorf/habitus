@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.data.user;
+package tech.ignitr.habitus.data.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -3,13 +3,8 @@ package tech.ignitr.habitus.web.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.ignitr.habitus.data.user.User;
-import tech.ignitr.habitus.security.AuthService;
-import tech.ignitr.habitus.security.AuthenticationResponse;
-import tech.ignitr.habitus.service.user.UserService;
-import tech.ignitr.habitus.web.users.UserRequest;
-
-import java.util.UUID;
+import tech.ignitr.habitus.service.auth.AuthService;
+import tech.ignitr.habitus.service.auth.AuthenticationResponse;
 
 @RestController
 @RequiredArgsConstructor

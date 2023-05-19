@@ -1,7 +1,7 @@
-package tech.ignitr.habitus.service.user;
+package tech.ignitr.habitus.service.users;
 
 import org.springframework.http.ResponseEntity;
-import tech.ignitr.habitus.data.user.User;
+import tech.ignitr.habitus.data.users.User;
 import tech.ignitr.habitus.web.auth.LoginRequest;
 import tech.ignitr.habitus.web.auth.RegisterRequest;
 import tech.ignitr.habitus.web.users.UserRequest;

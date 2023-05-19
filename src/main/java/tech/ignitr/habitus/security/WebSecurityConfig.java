@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.configuration;
+package tech.ignitr.habitus.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

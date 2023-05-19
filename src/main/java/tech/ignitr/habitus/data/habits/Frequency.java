@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.data.habit;
+package tech.ignitr.habitus.data.habits;
 
 public enum Frequency {
 

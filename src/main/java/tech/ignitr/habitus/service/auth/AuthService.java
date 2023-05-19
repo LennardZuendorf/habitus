@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.security;
+package tech.ignitr.habitus.service.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,9 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.ignitr.habitus.configuration.DatabaseException;
-import tech.ignitr.habitus.data.user.User;
-import tech.ignitr.habitus.data.user.UserRepository;
+import tech.ignitr.habitus.data.configuration.DatabaseException;
+import tech.ignitr.habitus.data.users.User;
+import tech.ignitr.habitus.data.users.UserRepository;
 import tech.ignitr.habitus.web.auth.LoginRequest;
 import tech.ignitr.habitus.web.auth.RegisterRequest;
 
