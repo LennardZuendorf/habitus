@@ -1,13 +1,13 @@
-package tech.ignitr.habitus.web.habit;
+package tech.ignitr.habitus.web.habits;
 
 import lombok.Getter;
-import tech.ignitr.habitus.data.habit.Frequency;
+import tech.ignitr.habitus.data.habits.Frequency;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-public class HabitRequest {
+public class HabitModel {
 
     private UUID id;
     private UUID userId;

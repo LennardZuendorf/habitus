@@ -1,21 +1,24 @@
-![Logo](https://github.com/LennardZuendorf/ignitus/blob/main/public/github/habitus.png)
+<img src='https://ignitr.tech/static/images/habitus/intro.png' alt= “Logo” width="250">
 
 <h1>Habitus</h1>
+
 <h4>Habitus was originally created as part of HTW Berlin's Webtech course. It's a classic habit/goal tracking webapp.
 Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
 
-<h4>Now a spring backend build in java and on supabase that I might use as part of another project.</h4>
+<h4>Now a spring backend build in java and running on Digital Ocean and powered by PostgreSQL. Planned to be part of the UNITUM project.</h4>
 
 <h2>🏗️ Tech Stack:</h2>
 
-**Server:** Java, Spring Boot
+**Languages:** Java, Kotlin
 
-**Hosting, Database:** DigitalOcean (Docker), Supabase PostgreSQL
+**Framework & Build Tool:** Spring Boot, Gradle
+
+**Hosting, Database, Auth:** Digital Ocean (Docker), PostgreSQL
 
 <h2>🚧 Roadmap:</h2>
 
-- updating Auth to use Supabase GoTrue server
-- implementing nice to have features (i.e. savin icon data)
+- merging into multi module project utalising Quarkus
+- implementing nice to have features (i.e. saving icon data)
 - adding goal tracking abilities
 - integrating into a bigger project idea ("Unitum")
 
@@ -28,4 +31,4 @@ Originally based on Java, Spring and Thymeleaf with Vue.js via cdn.</h4>
 
 **Author:** [@LennardZuendorf](https://github.com/LennardZuendorf)
 
-- This project is using some resources from AmigosCode's tutorial on [SpringBoot3 + Spring Security 6](https://www.youtube.com/watch?v=KxqlJblhzfI&t=2124s&ab_channel=Amigoscode)
+- This project is using some resources from AmigosCode's tutorial on [SpringBoot3 + Spring Security 6](https://www.youtube.com/watch?v=KxqlJblhzfI&t=2124s&ab_channel=Amigoscode) and takes some inspiration from [here](https://github.com/ChangeNode/spring-boot-supabase/tree/spring-boot-3-update)

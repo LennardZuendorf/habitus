@@ -1,15 +1,16 @@
-package tech.ignitr.habitus.service.user;
+package tech.ignitr.habitus.service.users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import tech.ignitr.habitus.configuration.DatabaseException;
-import tech.ignitr.habitus.data.user.User;
-import tech.ignitr.habitus.data.user.UserRepository;
-import tech.ignitr.habitus.web.user.LoginRequest;
-import tech.ignitr.habitus.web.user.RegisterRequest;
-import tech.ignitr.habitus.web.user.UserRequest;
+import tech.ignitr.habitus.data.configuration.DatabaseException;
+import tech.ignitr.habitus.data.users.User;
+import tech.ignitr.habitus.data.users.UserRepository;
+import tech.ignitr.habitus.service.auth.AuthService;
+import tech.ignitr.habitus.service.auth.AuthenticationResponse;
+import tech.ignitr.habitus.web.auth.AuthModel;
+import tech.ignitr.habitus.web.users.UserModel;
 
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final AuthService authService;
 
     /**
      * @param id the id identifying the user whose data is required.
@@ -34,13 +36,22 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * @param id the id identifying the user whose data shall be updated
+     * @param model, the request body containing the user's data.
      * @return response containing the newly created user.
      */
     @Override
-    public ResponseEntity<User> putUser( UserRequest requestBody) {
+    public ResponseEntity<User> putUser(UserModel model) {
         try{
-            return ResponseEntity.ok(updateUser(requestBody));
+            User updateUser = repository.findById(model.getId())
+                    .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND));
+            User newUser = User.builder()
+                    .id(model.getId())
+                    .email(updateUser.getEmail())
+                    .name(model.getName())
+                    .password(updateUser.getPassword())
+                    .build();
+            repository.saveAndFlush(newUser);
+            return ResponseEntity.ok(newUser);
         } catch(DatabaseException e){
             return ResponseEntity.status(e.getHttpStatus()).build();
         }
@@ -63,32 +74,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * @param request, the request containing the username and password of the user.
-     * @return response containing the JWT token of the user.
+     * @param model, the request body containing the user's data.
+     * @return response containing the updated user.
      */
     @Override
-    public ResponseEntity<String> registerUser(RegisterRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body("Test");
+    public ResponseEntity<AuthenticationResponse> updateUserCredentials(AuthModel model, UUID id) {
+        return authService.updateUserCredentials(model, id);
     }
-
-    /**
-     * @param request, the request containing the username and password of the user.
-     * @return response containing the JWT token of the user.
-     */
-    @Override
-    public ResponseEntity<String> loginUser(LoginRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body("Test");
-    }
-
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    private User updateUser(UserRequest requestBody) throws DatabaseException {
-        return repository.findById(requestBody.getId())
-                .orElseThrow(()-> new DatabaseException("user not found", HttpStatus.NOT_FOUND));
-    }
-
 }
