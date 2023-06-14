@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.configuration;
+package tech.ignitr.habitus.data.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

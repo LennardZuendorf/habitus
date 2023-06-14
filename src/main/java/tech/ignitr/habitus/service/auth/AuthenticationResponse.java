@@ -1,8 +1,8 @@
-package tech.ignitr.habitus.security;
+package tech.ignitr.habitus.service.auth;
 
 import lombok.Builder;
 import lombok.Data;
-import tech.ignitr.habitus.data.user.User;
+import tech.ignitr.habitus.data.users.User;
 
 @Data
 @Builder

@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.security;
+package tech.ignitr.habitus.service.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import tech.ignitr.habitus.data.user.UserRepository;
+import tech.ignitr.habitus.data.users.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor

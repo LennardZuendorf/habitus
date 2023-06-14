@@ -1,4 +1,4 @@
-package tech.ignitr.habitus.web.user;
+package tech.ignitr.habitus.web.auth;
 
 import lombok.Data;
 

@@ -1,9 +1,9 @@
-package tech.ignitr.habitus.web.user;
+package tech.ignitr.habitus.web.auth;
 
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class AuthModel {
 
     private String email;
     private String password;
