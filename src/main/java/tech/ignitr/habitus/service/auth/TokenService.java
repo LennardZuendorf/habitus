@@ -25,7 +25,9 @@ import java.util.function.Function;
 @Service
 public class TokenService {
 
-    String jwtSecret = "uyJ46F2eeM4mIIoGTinoZJk96YLv56JzuyJ46F2eeM4mIIoGTinoZJk96YLv56Jz";
+    
+    @Value("${jwt_secret}")
+    String jwtSecret;
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = Jwts
