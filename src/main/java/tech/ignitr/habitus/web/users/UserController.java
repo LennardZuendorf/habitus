@@ -16,21 +16,21 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final String baseURL = "/api";
+    private final String baseURL = "/api/users";
     private final UserService userService;
     private final HabitService service;
 
-    @GetMapping(path = baseURL+"/users/{id}")
+    @GetMapping(path = baseURL+"/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") UUID id){
         return userService.getUser(id);
     }
 
-    @PutMapping(path=baseURL+"/users")
+    @PutMapping(path=baseURL)
     public ResponseEntity<User> putUser(@RequestBody UserModel request){
         return userService.putUser(request);
     }
 
-    @DeleteMapping(path=baseURL+"/users/{id}")
+    @DeleteMapping(path=baseURL+"/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") UUID id){
         return userService.deleteUser(id);
     }
@@ -40,7 +40,7 @@ public class UserController {
      * @param id - id of the user all habits should be deleted from
      * @return ResponseEntity containing the status code from service method
      */
-    @DeleteMapping(baseURL+"/users/{id}/habits")
+    @DeleteMapping(baseURL+"/{id}/habits")
     public ResponseEntity <Void> deleteAllHabits (@PathVariable("id") UUID id){
         return service.deleteAllHabits(id);
     }
@@ -50,7 +50,7 @@ public class UserController {
      * @param id - the user ID to be selected by
      * @return ResponseEntity containing the status code from service method and a list of Habits
      */
-    @GetMapping(baseURL+"/users/{id}/habits")
+    @GetMapping(baseURL+"/{id}/habits")
     public ResponseEntity <List<Habit>> getAllHabit(@PathVariable("id") UUID id){
         return service.getHabits(id);
     }
@@ -60,7 +60,7 @@ public class UserController {
      * @param model - all of HabitEntity params
      * @return ResponseEntity containing the status code from service method and the created Habit
      */
-    @PutMapping(path=baseURL+"/users/{id}/credentials")
+    @PutMapping(path=baseURL+"/{id}/credentials")
     public ResponseEntity<AuthenticationResponse> updateUserCredentials(@RequestBody AuthModel model, @PathVariable UUID id){
         return userService.updateUserCredentials(model, id);
     }

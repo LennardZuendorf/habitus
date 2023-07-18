@@ -22,19 +22,6 @@ kotlin {
     jvmToolchain(18)
 }
 
-dockerCompose {
-    useComposeFiles.add("src/test/resources/docker-compose.yaml")
-    isRequiredBy(tasks.test)
-}
-
-tasks.test {
-    doFirst {
-        dockerCompose.exposeAsEnvironment(test)
-    }
-
-    useJUnitPlatform()
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
