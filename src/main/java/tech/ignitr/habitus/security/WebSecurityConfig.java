@@ -9,12 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tech.ignitr.habitus.security.JwtAuthFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig{
+
+    /**
 
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authProvider;
@@ -37,6 +38,6 @@ public class WebSecurityConfig{
 
         return httpSecurity.build();
     }
-
+    **/
 }
 

@@ -5,12 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import tech.ignitr.habitus.data.habits.Habit;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,64 +31,5 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String email;
-
-    @Column(nullable = false)
-    private String password;
-
-    /**
-     * @return authorities
-     */
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton((GrantedAuthority) () -> "DEFAULT_USER");
-    }
-
-    /**
-     * @return password
-     */
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    /**
-     * @return userEmail
-     */
-    @Override
-    public String getUsername() {
-        return getEmail();
-    }
-
-    /**
-     * @return true
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    /**
-     * @return true
-     */
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    /**
-     * @return true
-     */
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    /**
-     * @return true
-     */
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
 

@@ -5,10 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ignitr.habitus.data.habits.Habit;
 import tech.ignitr.habitus.data.users.User;
-import tech.ignitr.habitus.service.auth.AuthenticationResponse;
 import tech.ignitr.habitus.service.habits.HabitService;
 import tech.ignitr.habitus.service.users.UserService;
-import tech.ignitr.habitus.web.auth.AuthModel;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +17,7 @@ public class UserController {
     private final String baseURL = "/api/users";
     private final UserService userService;
     private final HabitService service;
+
 
     @GetMapping(path = baseURL+"/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") UUID id){
@@ -55,13 +54,4 @@ public class UserController {
         return service.getHabits(id);
     }
 
-    /**
-     * API call for creating a new habit (HabitEntity)
-     * @param model - all of HabitEntity params
-     * @return ResponseEntity containing the status code from service method and the created Habit
-     */
-    @PutMapping(path=baseURL+"/{id}/credentials")
-    public ResponseEntity<AuthenticationResponse> updateUserCredentials(@RequestBody AuthModel model, @PathVariable UUID id){
-        return userService.updateUserCredentials(model, id);
-    }
 }

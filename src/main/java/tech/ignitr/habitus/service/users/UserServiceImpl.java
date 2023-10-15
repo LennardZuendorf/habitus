@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 import tech.ignitr.habitus.data.configuration.DatabaseException;
 import tech.ignitr.habitus.data.users.User;
 import tech.ignitr.habitus.data.users.UserRepository;
-import tech.ignitr.habitus.service.auth.AuthService;
-import tech.ignitr.habitus.service.auth.AuthenticationResponse;
-import tech.ignitr.habitus.web.auth.AuthModel;
 import tech.ignitr.habitus.web.users.UserModel;
 
 import java.util.UUID;
@@ -19,7 +16,6 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
-    private final AuthService authService;
 
     /**
      * @param id the id identifying the user whose data is required.
@@ -48,7 +44,6 @@ public class UserServiceImpl implements UserService {
                     .id(model.getId())
                     .email(updateUser.getEmail())
                     .name(model.getName())
-                    .password(updateUser.getPassword())
                     .build();
             repository.saveAndFlush(newUser);
             return ResponseEntity.ok(newUser);
@@ -71,14 +66,5 @@ public class UserServiceImpl implements UserService {
         } catch(DatabaseException e){
             return ResponseEntity.status(e.getHttpStatus()).build();
         }
-    }
-
-    /**
-     * @param model, the request body containing the user's data.
-     * @return response containing the updated user.
-     */
-    @Override
-    public ResponseEntity<AuthenticationResponse> updateUserCredentials(AuthModel model, UUID id) {
-        return authService.updateUserCredentials(model, id);
     }
 }
