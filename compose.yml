@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+  postgresql_auth:
+    container_name: "db_auth"
+    image: docker.io/bitnami/postgresql:latest
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRESQL_PASSWORD=${AUTH_DB_PW}
+      - POSTGRESQL_USERNAME=${AUTH_DB_USER}
+      - POSTGRESQL_DATABASE=${AUTH_DB_NAME}
+    volumes:
+      - 'postgresql_data:/auth/postgresql'
+
+  keycloak:
+    container_name: "auth"
+    image: docker.io/bitnami/keycloak:latest
+    ports:
+      - "8082:8080"
+    environment:
+      - KEYCLOAK_DATABASE_HOST=postgresql_auth
+      - KEYCLOAK_DATABASE_USER=${AUTH_DB_USER}
+      - KEYCLOAK_DATABASE_PASSWORD=${AUTH_DB_PW}
+      - KEYCLOAK_DATABASE_NAME=${AUTH_DB_NAME}
+      - KEYCLOAK_DATABASE_PORT_NUMBER=5434
+      - KEYCLOAK_ADMIN_USER=${AUTH_ADMIN_USER}
+      - KEYCLOAK_ADMIN_PASSWORD=${AUTH_ADMIN_PW}
+    depends_on:
+      - postgresql_auth
+    volumes:
+      - './mynewtheme:/opt/bitnami/keycloak/themes/mynewtheme'
+
+  postgresql_app:
+    container_name: "db_app"
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - 'postgresql_data:/app/postgresql'
+    environment:
+      - POSTGRES_PASSWORD=${APP_DB_PW}
+      - POSTGRES_USER=${APP_DB_USER}
+      - POSTGRES_DB=${APP_DB_NAME}
+
+  application:
+    container_name: "application"
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=${APP_DB_URL}
+      - DB_USER=${APP_DB_USER}
+      - DB_PW=${APP_DB_PW}
+    depends_on:
+      - postgresql_auth
+      - keycloak
+
+volumes:
+  postgresql_data:
+    driver: local
+
+

@@ -4,9 +4,9 @@ spring:
   application:
     name: Habitus
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PW}
+    url: ${APP_DB_URL}
+    username: ${APP_DB_USER}
+    password: ${APP_DB_PW}
     driverClassName: org.postgresql.Driver
   jpa:
     open-in-view: true
@@ -16,5 +16,5 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-master.yaml
-    user: ${DB_USER}
-    password: ${DB_PW}
+    user: ${APP_DB_USER}
+    password: ${APP_DB_PW}
