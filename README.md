@@ -10,11 +10,11 @@
 
 ## 🏗️ Tech Stack:
 
-**Languages:** Java, Kotlin, HTML/CSS/JS
+**Languages:** Java, HTML/CSS/JS
 
-**Frameworks & Build Tool:** Spring Boot, React, Gradle
+**Frameworks & Build Tool:** Spring Boot, Liquibase, React, Gradle
 
-**Hosting, Database, Auth:** Digital Ocean (Docker), PostgreSQL, Keycloak, Liquibase
+**Hosting, Database, Auth:** Docker Container, PostgreSQL, Keycloak
 
 ## 🚧 Roadmap:
 
