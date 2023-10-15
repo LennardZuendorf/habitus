@@ -1,0 +1,87 @@
+databaseChangeLog:
+  - changeSet:
+        id: 1697369384601-1
+        author: lenna (generated)
+        objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+        changes:
+          - createTable:
+              columns:
+                - column:
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                      primaryKeyName: pk_users
+                    name: id
+                    type: UUID
+                - column:
+                    constraints:
+                      nullable: false
+                    name: name
+                    type: VARCHAR(255)
+                - column:
+                    constraints:
+                      nullable: false
+                    name: email
+                    type: VARCHAR(255)
+              tableName: users
+  - changeSet:
+      id: 1697369384601-2
+      author: LennardZuendorf
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_habits
+                  name: id
+                  type: UUID
+              - column:
+                  name: user_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: tag
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: max_quantity
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: frequency
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: current_quantity
+                  type: INTEGER
+              - column:
+                  name: date_done
+                  type: date
+              - column:
+                  constraints:
+                    nullable: false
+                  name: done
+                  type: BOOLEAN
+            tableName: habits
+
+  - changeSet:
+      id: 1697369384601-3
+      author: lenna (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: habits
+            constraintName: fk_habits_on_user
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+

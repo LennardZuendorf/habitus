@@ -10,11 +10,11 @@ spring:
     driverClassName: org.postgresql.Driver
   jpa:
     open-in-view: true
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          time_zone: UTC
-    show-sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.yaml
+    user: ${DB_USER}
+    password: ${DB_PW}
