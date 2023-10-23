@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WebController {
 
-    @Controller
-    public class GreetingController {
+    @GetMapping("/")
+    public String index(Model model) {
+        return "index";
+    }
 
-        @GetMapping("/greeting")
-        public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
-            model.addAttribute("name", name);
-            return "greeting";
-        }
+    @GetMapping("/legal")
+    public String publicTest(Model model) {
+        return "legal";
+    }
 
+    @GetMapping("/app")
+    public String app(Model model) {
+        return "app";
     }
 }
