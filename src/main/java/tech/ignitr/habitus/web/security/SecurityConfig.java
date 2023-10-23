@@ -30,7 +30,7 @@ class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/public").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/legal").permitAll()
                         .anyRequest().authenticated()
                 )
