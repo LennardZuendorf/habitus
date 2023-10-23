@@ -10,22 +10,18 @@
 
 ## 🏗️ Tech Stack:
 
-**Languages:** Java, HTML/CSS/JS
+**Languages & notable dependencies:** Java, HTML/CSS/JS, Liquibase, HTMX, Bootstrap
 
-**Frameworks & Build Tool:** Spring Boot, Liquibase, React, Gradle
+**Framework & Build Tool:** Spring Boot, Gradle
 
 **Hosting, Database, Auth:** Docker Container, PostgreSQL, Keycloak
 
 ## 🚧 Roadmap:
 
-- updates to use Keycloak, Liquibase, 
+- updates to use Keycloak, Liquibase
+- fixing code smells and refactoring 
 - Implementing nice-to-have features (i.e., saving icon data)
-- implementing HTML and React frontend
-- Adding goal-tracking abilities
-
-## 🗳️ Status (Production):
-
-[![Java CI with Gradle](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml/badge.svg)](https://github.com/LennardZuendorf/habitus/actions/workflows/gradle.yml)
+- implementing HTML and HTMX frontend
 
 ## 👨‍💻 Author and Credits:
 
