@@ -18,3 +18,20 @@ spring:
     change-log: classpath:db/changelog/changelog-master.yaml
     user: ${APP_DB_USER}
     password: ${APP_DB_PW}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: application
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_URL}/realms/habitus
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL}/realms/habitus
+
+
